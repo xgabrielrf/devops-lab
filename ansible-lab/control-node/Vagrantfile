@@ -1,0 +1,11 @@
+# For the nfs step, if you're in a Windows machine, run the following command:
+#   vagrant plugin install vagrant-winnfsd
+# Without this plugin, you will not be able to run vagrant up
+ 
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.hostname = "control-node"
+  config.vm.network "private_network", ip: "192.168.2.102"
+  config.vm.synced_folder ".", "/vagrant", type: "nfs"
+  config.vm.provision "shell", path: "provision.sh"
+end

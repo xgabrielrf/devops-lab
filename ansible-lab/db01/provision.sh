@@ -1,0 +1,5 @@
+#/bin/bash
+echo "Adding id_rsa.pub from control-node into authorized_keys..."
+cat << EOT >> /home/vagrant/.ssh/authorized_keys
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCr6uA1mSbebVrz7+fd1mPLRm3Y6aauI6QsqJoxtPLC8FXio/RbW2Yu7pmPCiU0mflb4UQUE9BwljnARH3O3qJvhQZbJvHD5o7iMjqixJNb5BO7FYpmFIvFDAiDXxWXxvQdpKmEsJJ9CEteens8cR+xfICg4YTm39APdSOx5r+AICbkuQhA45Bjk6VEFC5WMO5PdEjXQx38Lk12KfZVtM7v+IfF4mYH6hZz621Bz1a8KAjJ+SBPfp7jAvFVumOSStzNfrwAFmqKBD+qn3dYaZ5c8BfYlHfKdCT4UvzcTi4jsG4iQZPeKC4QQmQVuMD/Ytz/YeLn+nhm5LFp3j5GYwUX vagrant@control-node
+EOT
