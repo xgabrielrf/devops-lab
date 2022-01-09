@@ -1,0 +1,25 @@
+---
+- name: Configure database server
+  hosts: db01
+
+  user: vagrant
+  become: yes
+  vars_files:
+    - vars/main.yml
+  vars:
+    - dbname: "db01"
+    - dbusername: "root"
+    - dbpassword: "devops"
+  tasks:
+    - name: Configure ansible hosts
+      lineinfile:
+        dest: /etc/hosts
+        state: present
+        line: "{{item}}"
+      with_items:
+        - 192.168.2.102 control-nome
+        - 192.168.2.103 app01
+        - 192.168.2.104 db01
+  roles:
+    - default-config-so
+    - role: geerlingguy.mysql
