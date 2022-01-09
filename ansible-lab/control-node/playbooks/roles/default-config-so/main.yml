@@ -6,3 +6,12 @@
   yum:
     name: git
     state: latest
+- name: Configure ansible hosts
+  lineinfile:
+    dest: /etc/hosts
+    state: present
+    line: "{{item}}"
+  with_items:
+    - 192.168.2.102 control-node
+    - 192.168.2.103 app01
+    - 192.168.2.104 db01
