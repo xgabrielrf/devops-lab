@@ -1,0 +1,72 @@
+---
+- name: Configure Java app
+  hosts: app01
+  user: vagrant
+  become: yes
+  vars:
+    - dbhost: "db01"
+    - dbname: "notes"
+    - dbusername: "notesapp"
+    - dbpassword: "devops"
+  tasks:
+    - name: Add user app
+      user:
+        name: app
+        comment: Application user
+        uid: 500
+    - name: Include maven repo
+      get_url:
+        url: http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo
+        dest: /etc/yum.repos.d/epel-apache-maven.repo
+    - name: Maven install
+      yum:
+        name: apache-maven
+        state: latest
+    - name: Java install
+      yum:
+        name: java-11-openjdk
+        state: latest
+    - name: Create app folder
+      file:
+        path: /opt/notes
+        state: directory
+        owner: app
+        group: app
+    - name: Git clone repo Notes - app
+      git:
+        repo: 'https://github.com/callicoder/spring-boot-mysql-rest-api-tutorial'
+        dest: /opt/notes
+        clone: yes
+        force: yes
+    - name: Configure properties file to database
+      template:
+        src: application.properties
+        dest: /opt/notes/src/main/resources/application.properties
+    - name: Build package
+      command: mvn -f /opt/notes/pom.xml package
+      become_user: app
+    - name: Register package version
+      shell:
+        cmd: mvn help:evaluate -Dexpression=project.version -q -DforceStdout
+        chdir: /opt/notes
+      register: app_version
+    - name: Configure systemd service
+      template:
+        src: etc/systemd/system/notes.service
+        dest: /etc/systemd/system/notes.service
+      notify: reload daemon
+    - name: Start notes service
+      service:
+        name: notes
+        state: restarted
+  roles:
+    - default-config-so
+  handlers:
+    - name: reaload app
+      systemd:
+        state: restarted
+        daemon_reload: yes
+        name: 'notes'
+    - name: reload daemon
+      systemd:
+        daemon_reexec: yes
