@@ -1,0 +1,18 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.provision "shell", path: "provision.sh"
+
+  # #Copy files from host to the VM
+  # config.vm.provision :file do |file|
+  #   file.source = "Dockerfile"
+  #   file.destination = "/home/vagrant/Dockerfile"
+  # end
+  # config.vm.provision :file do |file|
+  #   file.source = "easy-notes-1.0.0.jar"
+  #   file.destination = "/home/vagrant/easy-notes.jar"
+  # end
+  # config.vm.provision :file do |file|
+  #   file.source = "application.properties"
+  #   file.destination = "/home/vagrant/application.properties"
+  # end
+end
