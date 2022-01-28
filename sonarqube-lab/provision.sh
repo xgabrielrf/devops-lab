@@ -33,8 +33,8 @@ sudo systemctl enable sonar
 #Install Sonar Scanner
 sudo wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
 sudo unzip sonar-scanner-cli-4.6.2.2472-linux.zip -d /opt/
-sudo mv /opt//opt/sonar-scanner-4.6.2.2472-linux /opt/sonar-scanner
+sudo mv /opt/sonar-scanner-4.6.2.2472-linux /opt/sonar-scanner
 sudo chown -R sonar. /opt/sonar-scanner
-echo "export PATH=$PATH:/opt/sonar-scanner/bin" | sudo tee -a /etc/profile
+sudo echo "export PATH=$PATH:/opt/sonar-scanner/bin" | sudo tee -a /etc/profile
 sudo curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
 sudo yum install nodejs -y
