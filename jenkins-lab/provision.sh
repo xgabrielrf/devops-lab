@@ -31,6 +31,3 @@ sudo chown -R jenkins. /opt/sonar-scanner
 sudo echo "export PATH=$PATH:/opt/sonar-scanner/bin" | sudo tee -a /etc/profile
 sudo curl -sL https://rpm.nodesource.com/setup_10.x | sudo bash -
 sudo yum install nodejs -y
-
-#Start Nexus
-sudo docker start nexus
