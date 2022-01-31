@@ -1,0 +1,4 @@
+yum install bash-completion -y
+echo 'source <(kubectl completion bash)' >> ~/.bashrc
+kubectl completion bash > /etc/bash_completion.d/kubectl
+echo 'complete -F __start_kubectl k' >> ~/.bashrc
